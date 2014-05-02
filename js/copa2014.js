@@ -1,16 +1,18 @@
-var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart','xml']).config(['$routeProvider',
+var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart']).config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/empreendimento', {
                 templateUrl: 'partials/empreendimentosCopa.html',
-                controller: 'FatChartCtrl'
+                controller: 'copa2014'
             }).
             otherwise({
-                redirectTo: '/fat'
+                redirectTo: '/empreendimento'
             });
-    }]).config(function ($httpProvider) {
+    }]);
+
+/*.config(function ($httpProvider) {
         $httpProvider.interceptors.push('xmlHttpInterceptor');
-    });	
+    });*/	
 
 
 app.controller('NavController', function ($scope, $location, $modal) {
@@ -43,20 +45,41 @@ app.controller('copa2014',function ($scope, $http) {
 
     // We must use .then() and not .success()
     $http.get('http://www.portaltransparencia.gov.br/copa2014/api/rest/empreendimento').then(function (response) {
-        var empreendimentos = [],
-            els = response.xml.find('copa:empreendimento'),
-            empreendimento,
-            i;
+        var empreendimentos = [];
+	var x2js = new X2JS();
+        var empreendimentos = x2js.xml_str2json( response.data );
+	var empreendimento = empreendimentos.collection.empreendimento;
+        $scope.empreendimentos = empreendimento;
+	var chart = {};
+        chart.type = "Table";
+        chart.displayed = true;
+	chart.data = {
+		     "cols": [
+		       {
+			"id": "cidadeSede",
+			"label": "Cidade",
+			"type": "string",
+			"p": {}
 
-        for (i = 0; i < els.length; i += 1) {
-            empreendimento = angular.element(els[i]);
-            empreendimentos.push({
-              name: empreendimento.attr('descricao'),
-              id: empreendimento.attr('id')
-            });
-        }
-
-        $scope.empreendimentos = empreendimentos;
+		       },
+		       {
+			"id": "valorTotalPrevisto",
+                        "label": "Valor Previsto",
+                        "type": "number",
+                        "p": {}
+                       }
+		     ]
+		   };	
+		angular.forEach(empreendimento, function (emp, j){
+			 angular.forEach(emp, function (val, k){
+				angular.forEach(chart.data.cols, function (col, i){
+				if (col.id == k) {
+					console.log(val);
+				} 
+				});
+                	});
+        	});
+	console.log(chart);
     });
 });
 

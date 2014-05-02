@@ -1,4 +1,4 @@
-var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart']).config(['$routeProvider',
+var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart','xml']).config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/fat', {
@@ -8,7 +8,9 @@ var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart']
             otherwise({
                 redirectTo: '/fat'
             });
-    }]);
+    }]).config(function ($httpProvider) {
+        $httpProvider.interceptors.push('xmlHttpInterceptor');
+    });	
 
 app.controller('NavController', function ($scope, $location, $modal) {
     $scope.isCollapsed = true;
@@ -34,6 +36,9 @@ app.controller('NavController', function ($scope, $location, $modal) {
 	  };
   };
 });
+
+
+
 
 app.controller("FatChartCtrl", function ($scope) {
 

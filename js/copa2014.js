@@ -12,6 +12,7 @@ var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart',
         $httpProvider.interceptors.push('xmlHttpInterceptor');
     });	
 
+
 app.controller('NavController', function ($scope, $location, $modal) {
     $scope.isCollapsed = true;
 	$scope.dashboards = ['Dashboard1', 'Dashboard2', 'Dashboard3'];
@@ -37,6 +38,27 @@ app.controller('NavController', function ($scope, $location, $modal) {
   };
 });
 
+app.controller('copa2014',function ($scope, $http) {
+    $scope.empreendimentos = [];
+
+    // We must use .then() and not .success()
+    $http.get('http://www.portaltransparencia.gov.br/copa2014/api/rest/empreendimento').then(function (response) {
+        var empreendimentos = [],
+            els = response.xml.find('copa:empreendimento'),
+            empreendimento,
+            i;
+
+        for (i = 0; i < els.length; i += 1) {
+            empreendimento = angular.element(els[i]);
+            empreendimentos.push({
+              name: empreendimento.attr('descricao'),
+              id: empreendimento.attr('id')
+            });
+        }
+
+        $scope.empreendimentos = empreendimentos;
+    });
+});
 
 
 

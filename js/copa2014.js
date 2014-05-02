@@ -2,7 +2,7 @@ var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart']
     function ($routeProvider) {
         $routeProvider.
             when('/fat', {
-                templateUrl: 'fat.html',
+                templateUrl: 'partials/fat.html',
                 controller: 'FatChartCtrl'
             }).
             otherwise({
@@ -14,7 +14,7 @@ app.controller('NavController', function ($scope, $location, $modal) {
     $scope.isCollapsed = true;
 	$scope.dashboards = ['Dashboard1', 'Dashboard2', 'Dashboard3'];
 	$scope.user = "Wellington Marinho";
-	$scope.company = "Globosat";
+	$scope.company = "Copa 2014 - Analytics";
 	 
     $scope.$on('$routeChangeSuccess', function () {
         $scope.isCollapsed = true;

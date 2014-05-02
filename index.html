@@ -49,25 +49,7 @@
               </ul>
             </li>
           </ul>          
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-                <form class="form-inline" role="form">
-                  <div class="form-group has-success has-feedback">
-                    <input type="text" class="form-control" placeholder="Pesquisar usuários">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                  </div>
-                </form>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user }} <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li >    
-                    <a href="#" ng-click="open()">Perfil</a>
-                </li>
-                <li><a href="#">Sair</a></li>
-              </ul>
-            </li>
-          </ul>
+          
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
@@ -84,8 +66,7 @@
 		<div class="row">
 			<div ng-view></div>
 		</div>
-	</div>
-   
+	</div>   
 
 	<div class="col-xs-7">
 		<div google-chart chart="chart" style="{{cssStyle}}" on-ready="chartReady()"></div>

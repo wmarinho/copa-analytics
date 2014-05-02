@@ -1,8 +1,8 @@
 var app = angular.module('globosatApi', ['ui.bootstrap','ngRoute','googlechart','xml']).config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
-            when('/fat', {
-                templateUrl: 'partials/fat.html',
+            when('/empreendimento', {
+                templateUrl: 'partials/empreendimentosCopa.html',
                 controller: 'FatChartCtrl'
             }).
             otherwise({
